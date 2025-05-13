@@ -28,26 +28,12 @@ namespace TheSeriesAnalyzer
             return selectedOption;
         }
 
-        static bool validateMenu(string str)
-        {
-            string possibleChoices = "0123456789";
-            if (possibleChoices.Contains(str))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
 
         static void SeriesAnalysisManager()
         {
 
             string runAgain;
             bool newList = false;
-            bool validate;
             float[] numbers = insertNewList();
 
             do
@@ -58,7 +44,6 @@ namespace TheSeriesAnalyzer
                     newList = false;
                 }
                 runAgain = menu();
-                //validate = validateMenu(runAgain);
 
                 switch (runAgain)
                 {
