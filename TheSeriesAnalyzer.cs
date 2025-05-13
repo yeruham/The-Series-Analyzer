@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +69,36 @@ namespace TheSeriesAnalyzer
                     break;
             }
             
+        }
+
+        static float[] insertNewList()
+        {
+            string stringOfNumbers = inputSeries();
+            string[] listOfStrings = stringToListString(stringOfNumbers);
+            float[] listOfFloat = listStrToListFloat(listOfStrings);
+            return listOfFloat;
+        }
+        static string inputSeries()
+        {
+            Console.WriteLine("insert a list of numbers, insert at least trhee numbers");
+            string stringOfNumbers = Console.ReadLine();
+            return stringOfNumbers;
+        }
+
+        static string[] stringToListString(string str)
+        {
+            string[] listOfStrings = str.Split(' ');
+            return listOfStrings;
+        }
+
+        static float[] listStrToListFloat(string[] listOfStrings)
+        {
+            float[] listOfFloat = new float[listOfStrings.Length];
+            for (int i = 0; i < listOfStrings.Length; i++)
+            {
+                listOfFloat[i] = float.Parse(listOfStrings[i]);
+            }
+            return listOfFloat;
         }
 
 
