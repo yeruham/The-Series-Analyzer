@@ -13,7 +13,7 @@ namespace TheSeriesAnalyzer
         static string menu()
         {
             string selectedOption;
-            Console.WriteLine("To insert a new list, press 1. \n" +
+            Console.WriteLine("\n To insert a new list, press 1. \n" +
                           "To display the series in the order entered, press 2. \n" +
                           "To view the series in reverse order, press 3. \n" +
                           "For the series in ascending order, press 4 \n" +
@@ -249,15 +249,6 @@ namespace TheSeriesAnalyzer
                 float[] arrNum = listToArray(numbers);
                 SeriesAnalysisManager(arrNum);
             };
-
-            
-            //string[] s = { "2", "9.5", "i7", "poi", "90", "-89", "00908"};
-            //float[] num = leavPositiveNum(s);
-            //Console.WriteLine(num.Length + " length");
-            //foreach (float number in num)
-            //{
-            //    Console.WriteLine(number);
-            //}
 
         }
     }
