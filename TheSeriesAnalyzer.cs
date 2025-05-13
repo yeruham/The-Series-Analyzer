@@ -13,17 +13,20 @@ namespace TheSeriesAnalyzer
 
         static void SeriesAnalysisManager()
         {
+            float[] numbers = insertNewList();
             bool runAgain = true;
             do
             {
-                menu();
+                runAgain = menu(numbers);
             }            
             while (runAgain);
         }
 
 
-        static void menu()
+        static bool menu(float[] numbers)
         {
+            bool runAgain = true;
+
             int selectedOption = 0;
 
                 Console.WriteLine("To insert a new list, press 1. \n" +
@@ -65,10 +68,11 @@ namespace TheSeriesAnalyzer
                         Console.WriteLine("number of numbers recorded");
                         break;
                 case 9:
+                    runAgain = false;
                     Console.WriteLine("exsit");
                     break;
             }
-            
+            return runAgain;
         }
 
         static float[] insertNewList()
@@ -101,13 +105,88 @@ namespace TheSeriesAnalyzer
             return listOfFloat;
         }
 
+        static void showAsEntered(float[] numbers)
+        {
+            foreach (float number in numbers)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+        }
+
+        static void showInReversed(float[] numbers)
+        {
+            for (int i = 1; i <= numbers.Length; i++) 
+            { 
+            Console.Write(numbers[numbers.Length - i] + " ");
+            }
+            Console.WriteLine();
+        }
 
 
+        static void sohwInOrder(float[] numbers)
+        {
+            Console.WriteLine();
+        }
+
+        static void showMin(float[] numbers)
+        {
+            float min = numbers[0];
+            foreach (float number in numbers)
+            {
+                if(number < min)
+                {
+                    min = number;
+                }
+            }
+            Console.WriteLine(min);
+        }
+
+        static void showMax(float[] numbers)
+        {
+            float max = numbers[0];
+            foreach (float number in numbers)
+            {
+                if (number < max)
+                {
+                    max = number;
+                }
+            }
+            Console.WriteLine(max);
+        }
+
+        static float sumNum(float[] numbers)
+        {
+            float sum = 0;
+            foreach (float number in numbers)
+            {
+                sum += number;
+            }
+            return sum;
+        }
+
+        static void showAverage(float[] numbers)
+        {
+            float average = 0;
+            float sum = sumNum(numbers);
+            Console.WriteLine(sum / numbers.Length);
+        }
+
+        static void showAmountNumbers(float[] numbers)
+        {
+            Console.WriteLine(numbers.Length);
+        }
+
+        static void showSum(float[] numbers)
+        {
+            Console.WriteLine(sumNum(numbers));
+        }
 
         static void Main(string[] args)
         {
 
-            SeriesAnalysisManager();
+            //SeriesAnalysisManager();
+
         }
     }
 }
