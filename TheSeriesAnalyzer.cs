@@ -10,70 +10,104 @@ namespace TheSeriesAnalyzer
 {
     internal class TheSeriesAnalyzer
     {
+        static string menu()
+        {
+            string selectedOption;
+            Console.WriteLine("To insert a new list, press 1. \n" +
+                          "To display the series in the order entered, press 2. \n" +
+                          "To view the series in reverse order, press 3. \n" +
+                          "For the series in ascending order, press 4 \n" +
+                          "To the maximum number, press 5 \n" +
+                          "To the minimum number, press 6 \n" +
+                          "For the series average, press 7 \n" +
+                          "For the number of numbers recorded, press 8 \n" +
+                          "For sum of the series, press 9 \n" +
+                          "To exsit, press 0 \n");
+            selectedOption = Console.ReadLine();
+
+            return selectedOption;
+        }
+
+        static bool validateMenu(string str)
+        {
+            string possibleChoices = "0123456789";
+            if (possibleChoices.Contains(str))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         static void SeriesAnalysisManager()
         {
+
+            string runAgain;
+            bool newList = false;
+            bool validate;
             float[] numbers = insertNewList();
-            bool runAgain = true;
+
             do
             {
-                runAgain = menu(numbers);
-            }            
-            while (runAgain);
-        }
-
-
-        static bool menu(float[] numbers)
-        {
-            bool runAgain = true;
-
-            int selectedOption = 0;
-
-                Console.WriteLine("To insert a new list, press 1. \n" +
-                              "To display the series in the order entered, press 2. \n" +
-                              "To view the series in reverse order, press 3. \n" +
-                              "For the series in ascending order, press 4 \n" +
-                              "To the maximum number, press 5 \n" +
-                              "To the minimum number, press 6 \n" +
-                              "For the series average, press 7 \n" +
-                              "For the number of numbers recorded, press 8 \n" +
-                              "To exsit, press 9 \n");
-
-            selectedOption = Convert.ToInt32(Console.ReadLine());
-
-            switch (selectedOption)
+                if (newList)
                 {
-                    case 1:
+                    numbers = insertNewList();
+                    newList = false;
+                }
+                runAgain = menu();
+                //validate = validateMenu(runAgain);
+
+                switch (runAgain)
+                {
+                    case "1":
+                        newList = true;
                         Console.WriteLine("new list");
                         break;
-                    case 2:
+                    case "2":
+                        showAsEntered(numbers);
                         Console.WriteLine("series in order");
                         break;
-                    case 3:
+                    case "3":
+                        showInReversed(numbers);
                         Console.WriteLine("series in reverse order");
                         break;
-                    case 4:
+                    case "4":
+                        showInOrder(numbers);
                         Console.WriteLine("series in ascending order");
                         break;
-                    case 5:
+                    case "5":
+                        showMax(numbers);
                         Console.WriteLine("maximum number");
                         break;
-                    case 6:
+                    case "6":
+                        showMin(numbers);
                         Console.WriteLine("minimum number");
                         break;
-                    case 7:
+                    case "7":
+                        showAverage(numbers);
                         Console.WriteLine("series average");
                         break;
-                    case 8:
+                    case "8":
+                        showAmountNumbers(numbers);
                         Console.WriteLine("number of numbers recorded");
                         break;
-                case 9:
-                    runAgain = false;
-                    Console.WriteLine("exsit");
-                    break;
-            }
-            return runAgain;
+                    case "9":
+                        showSum(numbers);
+                        Console.WriteLine("sum of series");
+                        break;
+                    case "0":
+                        Console.WriteLine("exsit");
+                        break;
+                    default:
+                        Console.WriteLine("invalid input. please try agine!");
+                        break;
+                }
+            } while (runAgain != "0");
         }
+
 
         static float[] insertNewList()
         {
@@ -100,11 +134,15 @@ namespace TheSeriesAnalyzer
             float[] listOfFloat = new float[listOfStrings.Length];
             for (int i = 0; i < listOfStrings.Length; i++)
             {
-                listOfFloat[i] = float.Parse(listOfStrings[i]);
+                listOfFloat[i] = Convert.ToSingle(listOfStrings[i]);
             }
             return listOfFloat;
         }
 
+        static bool validate()
+        {
+            return true;
+        }
         static void showAsEntered(float[] numbers)
         {
             foreach (float number in numbers)
@@ -124,8 +162,14 @@ namespace TheSeriesAnalyzer
         }
 
 
-        static void sohwInOrder(float[] numbers)
+        static void showInOrder(float[] numbers)
         {
+            float[] copy = numbers.ToArray();
+            Array.Sort(copy);
+            foreach (float number in copy)
+            {
+                Console.Write(number + " ");
+            }
             Console.WriteLine();
         }
 
@@ -142,19 +186,6 @@ namespace TheSeriesAnalyzer
             Console.WriteLine(min);
         }
 
-        static void showMax(float[] numbers)
-        {
-            float max = numbers[0];
-            foreach (float number in numbers)
-            {
-                if (number < max)
-                {
-                    max = number;
-                }
-            }
-            Console.WriteLine(max);
-        }
-
         static float sumNum(float[] numbers)
         {
             float sum = 0;
@@ -164,10 +195,22 @@ namespace TheSeriesAnalyzer
             }
             return sum;
         }
+        static void showMax(float[] numbers)
+        {
+            float max = numbers[0];
+            foreach (float number in numbers)
+            {
+                if (number > max)
+                {
+                    max = number;
+                }
+            }
+            Console.WriteLine(max);
+        }
+
 
         static void showAverage(float[] numbers)
         {
-            float average = 0;
             float sum = sumNum(numbers);
             Console.WriteLine(sum / numbers.Length);
         }
@@ -185,7 +228,7 @@ namespace TheSeriesAnalyzer
         static void Main(string[] args)
         {
 
-            //SeriesAnalysisManager();
+            SeriesAnalysisManager();
 
         }
     }
