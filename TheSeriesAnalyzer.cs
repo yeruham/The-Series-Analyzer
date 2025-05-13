@@ -31,19 +31,25 @@ namespace TheSeriesAnalyzer
 
         static void SeriesAnalysisManager()
         {
-
+            
             string runAgain;
-            bool newList = false;
-            float[] numbers = insertNewList();
-
+            bool newList = true;
+            float[] numbers = new float[0];
+            
+            
             do
             {
                 if (newList)
                 {
-                    numbers = insertNewList();
-                    newList = false;
+                    do
+                    {
+                        numbers = insertNewList();
+                        newList = false;
+                    } while (numbers.Length < 3);
+
                 }
                 runAgain = menu();
+
 
                 switch (runAgain)
                 {
@@ -98,8 +104,9 @@ namespace TheSeriesAnalyzer
         {
             string stringOfNumbers = inputSeries();
             string[] listOfStrings = stringToListString(stringOfNumbers);
-            float[] listOfFloat = listStrToListFloat(listOfStrings);
-            return listOfFloat;
+            List<float> listOfFloat = leavPositiveNum(listOfStrings);
+            float[] numbers = listToArray(listOfFloat);
+            return numbers;
         }
         static string inputSeries()
         {
@@ -114,19 +121,30 @@ namespace TheSeriesAnalyzer
             return listOfStrings;
         }
 
-        static float[] listStrToListFloat(string[] listOfStrings)
+        static float[] listToArray(List<float> numbers)
         {
-            float[] listOfFloat = new float[listOfStrings.Length];
-            for (int i = 0; i < listOfStrings.Length; i++)
+            float[] arrNumbers = new float[numbers.Count];
+            for (int i = 0; i < numbers.Count; i++)
             {
-                listOfFloat[i] = Convert.ToSingle(listOfStrings[i]);
-            }
-            return listOfFloat;
-        }
 
-        static bool validate()
+                arrNumbers[i] = numbers[i];
+            }
+            return arrNumbers;
+        }
+        static List<float> leavPositiveNum(string[] listSrt)
         {
-            return true;
+            List<float> numbers = new List<float>();
+            foreach (string str in listSrt)
+            {
+                if (float.TryParse(str, out float result))
+                {
+                    if (result > 0) { 
+                    numbers.Add(result);
+                }
+                };
+            }
+
+            return numbers;
         }
         static void showAsEntered(float[] numbers)
         {
@@ -214,6 +232,13 @@ namespace TheSeriesAnalyzer
         {
 
             SeriesAnalysisManager();
+            //string[] s = { "2", "9.5", "i7", "poi", "90", "-89", "00908"};
+            //float[] num = leavPositiveNum(s);
+            //Console.WriteLine(num.Length + " length");
+            //foreach (float number in num)
+            //{
+            //    Console.WriteLine(number);
+            //}
 
         }
     }
