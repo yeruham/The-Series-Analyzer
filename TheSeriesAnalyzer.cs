@@ -10,11 +10,21 @@ namespace TheSeriesAnalyzer
     internal class TheSeriesAnalyzer
     {
 
+        static void SeriesAnalysisManager()
+        {
+            bool runAgain = true;
+            do
+            {
+                menu();
+            }            
+            while (runAgain);
+        }
+
+
         static void menu()
         {
             int selectedOption = 0;
-            do
-            {
+
                 Console.WriteLine("To insert a new list, press 1. \n" +
                               "To display the series in the order entered, press 2. \n" +
                               "To view the series in reverse order, press 3. \n" +
@@ -26,8 +36,8 @@ namespace TheSeriesAnalyzer
                               "To exsit, press 9 \n");
 
             selectedOption = Convert.ToInt32(Console.ReadLine());
-            
-                switch (selectedOption)
+
+            switch (selectedOption)
                 {
                     case 1:
                         Console.WriteLine("new list");
@@ -53,13 +63,20 @@ namespace TheSeriesAnalyzer
                     case 8:
                         Console.WriteLine("number of numbers recorded");
                         break;
-                }
+                case 9:
+                    Console.WriteLine("exsit");
+                    break;
             }
-            while (selectedOption != 9);
+            
         }
+
+
+
+
         static void Main(string[] args)
         {
-            menu();
+
+            SeriesAnalysisManager();
         }
     }
 }
