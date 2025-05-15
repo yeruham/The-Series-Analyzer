@@ -31,16 +31,20 @@ namespace TheSeriesAnalyzer
 
 
         static void SeriesAnalysisManager(float[] arrNumbers)
-        // manager all the series analysis
+        // manager all the series analysis.
         {
             
+            // to exsit
             string runAgain;
+            // to new list
             bool newList = false;
+            // current list 
             float[] numbers = new float[0];
-            
-            
+
+            // loop Until you choose the exit.
             do
             {
+                // check if defult arr meets the conditions.
                 if (inputConfirmation(arrNumbers))
                 {
                     numbers = arrNumbers;
@@ -49,9 +53,11 @@ namespace TheSeriesAnalyzer
                 {
                     newList = true;
                 }
-                
+
+                // if yuo choose to input a new list or defult arr not meets the conditions.
                 if (newList)
                 {
+                    // loop until the new arr meets the conditions.
                     do
                     {
                         numbers = insertNewList();
@@ -61,7 +67,7 @@ namespace TheSeriesAnalyzer
                 }
                 runAgain = menu();
 
-
+                //according to the user's choice move to The corresponding function.
                 switch (runAgain)
                 {
                     case "1":
@@ -111,6 +117,7 @@ namespace TheSeriesAnalyzer
         }
 
         static bool inputConfirmation(float[] arrNumbers)
+        // function to confirmation the conditions:  which is on the list at least three positiv numbers.
         {
             int count = 0;
             foreach (float num in arrNumbers)
@@ -120,7 +127,6 @@ namespace TheSeriesAnalyzer
                     count++;
                 }
             }
-            Console.WriteLine("count================" + count);
             return count >= 3;
         }
 
