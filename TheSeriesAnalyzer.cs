@@ -11,6 +11,7 @@ namespace TheSeriesAnalyzer
     internal class TheSeriesAnalyzer
     {
         static string menu()
+        // show the options to the yusr. receives and returns his choice.
         {
             string selectedOption;
             Console.WriteLine("\n To insert a new list, press 1. \n" +
@@ -30,6 +31,7 @@ namespace TheSeriesAnalyzer
 
 
         static void SeriesAnalysisManager(float[] arrNumbers)
+        // manager all the series analysis
         {
             
             string runAgain;
@@ -39,7 +41,7 @@ namespace TheSeriesAnalyzer
             
             do
             {
-                if (arrNumbers.Length > 3)
+                if (inputConfirmation(arrNumbers))
                 {
                     numbers = arrNumbers;
                 }
@@ -47,13 +49,14 @@ namespace TheSeriesAnalyzer
                 {
                     newList = true;
                 }
+                
                 if (newList)
                 {
                     do
                     {
                         numbers = insertNewList();
                         newList = false;
-                    } while (numbers.Length < 3);
+                    } while (!inputConfirmation(numbers));
 
                 }
                 runAgain = menu();
@@ -63,39 +66,39 @@ namespace TheSeriesAnalyzer
                 {
                     case "1":
                         newList = true;
-                        Console.WriteLine("new list");
+                        //Console.WriteLine("new list");
                         break;
                     case "2":
                         showAsEntered(numbers);
-                        Console.WriteLine("series in order");
+                        //Console.WriteLine("series in order");
                         break;
                     case "3":
                         showInReversed(numbers);
-                        Console.WriteLine("series in reverse order");
+                        //Console.WriteLine("series in reverse order");
                         break;
                     case "4":
                         showInOrder(numbers);
-                        Console.WriteLine("series in ascending order");
+                        //Console.WriteLine("series in ascending order");
                         break;
                     case "5":
                         showMax(numbers);
-                        Console.WriteLine("maximum number");
+                        //Console.WriteLine("maximum number");
                         break;
                     case "6":
                         showMin(numbers);
-                        Console.WriteLine("minimum number");
+                        //Console.WriteLine("minimum number");
                         break;
                     case "7":
                         showAverage(numbers);
-                        Console.WriteLine("series average");
+                        //Console.WriteLine("series average");
                         break;
                     case "8":
                         showAmountNumbers(numbers);
-                        Console.WriteLine("number of numbers recorded");
+                        //Console.WriteLine("number of numbers recorded");
                         break;
                     case "9":
                         showSum(numbers);
-                        Console.WriteLine("sum of series");
+                        //Console.WriteLine("sum of series");
                         break;
                     case "0":
                         Console.WriteLine("exsit");
@@ -107,16 +110,33 @@ namespace TheSeriesAnalyzer
             } while (runAgain != "0");
         }
 
+        static bool inputConfirmation(float[] arrNumbers)
+        {
+            int count = 0;
+            foreach (float num in arrNumbers)
+            {
+                if (num > 0)
+                {
+                    count++;
+                }
+            }
+            Console.WriteLine("count================" + count);
+            return count >= 3;
+        }
+
 
         static float[] insertNewList()
+        // function which operates a number of functions below. by them she received string from the yusr.
+        // and returns array with numbers only.
         {
             string stringOfNumbers = inputSeries();
             string[] listOfStrings = stringToListString(stringOfNumbers);
-            List<float> listOfFloat = leavPositiveNum(listOfStrings);
+            List<float> listOfFloat = leavNum(listOfStrings);
             float[] numbers = listToArray(listOfFloat);
             return numbers;
         }
         static string inputSeries()
+        // function that received from the user string, and returns it. The goal is to get some numbers.
         {
             Console.WriteLine("insert a list of numbers, insert at least trhee numbers");
             string stringOfNumbers = Console.ReadLine();
@@ -124,12 +144,14 @@ namespace TheSeriesAnalyzer
         }
 
         static string[] stringToListString(string str)
+        // function that accepts string, and returns him in a array. each word in a different organ.
         {
             string[] listOfStrings = str.Split(' ');
             return listOfStrings;
         }
 
         static float[] listToArray(List<float> numbers)
+        // function that accepts list with flout numbers, and returns them in a array.
         {
             float[] arrNumbers = new float[numbers.Count];
             for (int i = 0; i < numbers.Count; i++)
@@ -139,22 +161,23 @@ namespace TheSeriesAnalyzer
             }
             return arrNumbers;
         }
-        static List<float> leavPositiveNum(string[] listSrt )
+        static List<float> leavNum(string[] listSrt )
+        // function that accepts string[], converting each number to flout,
+        // and returns list of flout of all numbers that found in the string[].
         {
             List<float> numbers = new List<float>();
             foreach (string str in listSrt)
             {
                 if (float.TryParse(str, out float result))
-                {
-                    if (result > 0) { 
+                { 
                     numbers.Add(result);
-                }
                 };
             }
 
             return numbers;
         }
         static void showAsEntered(float[] numbers)
+        // showlist of numbers as entered.
         {
             foreach (float number in numbers)
             {
@@ -164,6 +187,7 @@ namespace TheSeriesAnalyzer
         }
 
         static void showInReversed(float[] numbers)
+        // show list of numbers from the end of the list to the beginning.
         {
             for (int i = 1; i <= numbers.Length; i++) 
             { 
@@ -174,6 +198,7 @@ namespace TheSeriesAnalyzer
 
 
         static void showInOrder(float[] numbers)
+        // show list of numbers from the min to max number.
         {
             float[] copy = numbers.ToArray();
             Array.Sort(copy);
@@ -185,6 +210,7 @@ namespace TheSeriesAnalyzer
         }
 
         static void showMin(float[] numbers)
+        // Finds the minimum number from the list, and show them.
         {
             float min = numbers[0];
             foreach (float number in numbers)
@@ -198,6 +224,7 @@ namespace TheSeriesAnalyzer
         }
 
         static float sumNum(float[] numbers)
+        // Calculates the sum of all numbers in a list, and returns them.
         {
             float sum = 0;
             foreach (float number in numbers)
@@ -207,6 +234,7 @@ namespace TheSeriesAnalyzer
             return sum;
         }
         static void showMax(float[] numbers)
+        // Finds the maximum number from the list, and show them.
         {
             float max = numbers[0];
             foreach (float number in numbers)
@@ -221,17 +249,20 @@ namespace TheSeriesAnalyzer
 
 
         static void showAverage(float[] numbers)
+        // Calculates the average of all numbers in a list, and show them.
         {
             float sum = sumNum(numbers);
             Console.WriteLine(sum / numbers.Length);
         }
 
         static void showAmountNumbers(float[] numbers)
+        // Calculates the amount of numbers in a list, and show them.
         {
             Console.WriteLine(numbers.Length);
         }
 
         static void showSum(float[] numbers)
+        // show the sum of all the numbers in a list.
         {
             Console.WriteLine(sumNum(numbers));
         }
@@ -245,7 +276,7 @@ namespace TheSeriesAnalyzer
             }
             else 
             {
-                List<float> numbers = leavPositiveNum(args);
+                List<float> numbers = leavNum(args);
                 float[] arrNum = listToArray(numbers);
                 SeriesAnalysisManager(arrNum);
             };
